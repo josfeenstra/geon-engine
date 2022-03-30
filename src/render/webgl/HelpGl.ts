@@ -25,7 +25,7 @@ export namespace HelpGl {
      */
     export function getNextTextureID() {
         let id = nextTextureId;
-        nextTextureId += 1;
+        nextTextureId = (nextTextureId + 1) % 16; // NOTE: this is incorrect, but whatever
         return id;
     }
 

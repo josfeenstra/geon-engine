@@ -25,7 +25,7 @@ export class TextureMeshShader extends OldShader<ShaderMesh> {
     texture: WebGLTexture | null;
     u_texture_size: WebGLUniformLocation;
 
-    constructor(gl: WebGLRenderingContext, pixelPerfect = true) {
+    constructor(gl: WebGLRenderingContext, pixelPerfect = true, forcedZ?: number) {
         const vs = `
         // precision mediump int;
         // precision mediump float;
@@ -40,6 +40,7 @@ export class TextureMeshShader extends OldShader<ShaderMesh> {
         void main() {
             gl_Position = u_transform * a_position;
             v_texcoord = a_texcoord;
+            ${forcedZ ? `gl_Position.z = ${forcedZ.toPrecision(3)};` : ``} 
         }
         `;
 

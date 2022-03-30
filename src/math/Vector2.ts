@@ -12,6 +12,9 @@ import { Random } from "./Random";
 import { Util } from "./Util";
 
 export class Vector2 {
+
+    static dummy = Vector2.new();
+
     x: number;
     y: number;
 

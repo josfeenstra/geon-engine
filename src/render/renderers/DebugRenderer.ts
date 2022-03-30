@@ -66,6 +66,11 @@ export class DebugRenderer {
         this.activeShaders.clear();
     }
 
+    delete(key: string) {
+        this.shaders.delete(key);
+        this.activeShaders.delete(key);
+    }
+
     /**
      * Creates a new shader, or updates existing shader
      */
@@ -232,7 +237,7 @@ export class DebugRenderer {
             shader = new LineShader(gl, ...options);
             shader.set(unit);
         } else if (unit instanceof ImageMesh) {
-            shader = new TextureMeshShader(gl);
+            shader = new TextureMeshShader(gl, true, unit.forcedZ);
             shader.set(unit.buffer(), DrawSpeed.StaticDraw);
         } else if (unit instanceof Entity) {
 

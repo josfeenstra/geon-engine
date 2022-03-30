@@ -8,17 +8,19 @@ import { Bufferable } from "../basics/Bufferable";
  */
 export class ImageMesh implements Bufferable<ShaderMesh> {
 	constructor(
-		public image: Bitmap, 
+		public image: Bitmap | HTMLImageElement, 
 		public plane: Plane,
         public scale: number,
         public centered: boolean,
-        public doubleSided: boolean) {}
+        public doubleSided: boolean,
+		public forcedZ?: number // allows the z buffer of the shader to be overwritten if desired
+		) {}
 
-	static new(image: Bitmap, plane=Plane.WorldXY(), scale=1, centered=true, doubleSided=true) {
-		return new ImageMesh(image, plane, scale, centered, doubleSided);
+	static new(image: Bitmap | HTMLImageElement, plane=Plane.WorldXY(), scale=1, centered=true, doubleSided=true, forcedZ?: number) {
+		return new ImageMesh(image, plane, scale, centered, doubleSided, forcedZ);
 	}
 
 	buffer() : ShaderMesh {
-        return ShaderMesh.fromImage(this.image, this.plane, this.centered, this.scale, this.doubleSided);
+        return ShaderMesh.fromImage(this.image, this.plane, this.centered, this.scale, true, this.doubleSided);
 	}
 }

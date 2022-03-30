@@ -454,19 +454,19 @@ export class Camera {
         }
         if (state.isDown(Key.S)) {
             hasChanged = true;
-            this.pos.add(this.getRelativeUnitY().scale(0.01 * this.speed));
+            this.pos.add(this.getRelativeUnitY().scale(0.01 * this.speed * -this.zoom));
         }
         if (state.isDown(Key.W)) {
             hasChanged = true;
-            this.pos.add(this.getRelativeUnitY().scale(-0.01 * this.speed));
+            this.pos.add(this.getRelativeUnitY().scale(-0.01 * this.speed * -this.zoom));
         }
         if (state.isDown(Key.A)) {
             hasChanged = true;
-            this.pos.add(this.getRelativeUnitX().scale(0.01 * this.speed));
+            this.pos.add(this.getRelativeUnitX().scale(0.01 * this.speed * -this.zoom));
         }
         if (state.isDown(Key.D)) {
             hasChanged = true;
-            this.pos.add(this.getRelativeUnitX().scale(-0.01 * this.speed));
+            this.pos.add(this.getRelativeUnitX().scale(-0.01 * this.speed * -this.zoom));
         }
         if (state.isDown(Key.Q)) {
             hasChanged = true;
@@ -521,9 +521,9 @@ export class Camera {
         // pardon this insanely ugly statement
         let screenPoint = useMouse
             ? origin
-                  .added(khat.scaled(f))
-                  .add(ihat.scaled(mouseUnitX))
-                  .add(jhat.scaled(-mouseUnitY))
+                .added(khat.scaled(f))
+                .add(ihat.scaled(mouseUnitX))
+                .add(jhat.scaled(-mouseUnitY))
             : origin.added(khat.scaled(f));
 
         return Ray.fromPoints(origin, screenPoint);
@@ -536,7 +536,7 @@ export class Camera {
         // let z_plane = -1. / Math.tan(pi / 8.);
 
         // projection to screen
-        // let projection = Matrix4.newOrthographic(-1, 1, -1, 1, 0.1, 0.1);
+        // let projection = Matrix4.newOrthographic(-1, 1, -1, 1, 0.002, 0.002);
         let projection = Matrix4.newPerspective(this.fov, aspect, this.zNear, this.zFar);
         return projection;
     }
