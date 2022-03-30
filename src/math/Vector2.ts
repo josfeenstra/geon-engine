@@ -11,11 +11,7 @@ import { Matrix4 } from "./Matrix4";
 import { Random } from "./Random";
 import { Util } from "./Util";
 
-const trait = "vector-2";
-
 export class Vector2 {
-    readonly trait = trait;
-
     static dummy = Vector2.new();
 
     x: number;
