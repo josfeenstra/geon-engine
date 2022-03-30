@@ -60,8 +60,7 @@ export class Bitmap {
     }
 
     static fromImageData(id: ImageData): Bitmap {
-        let image = new Bitmap(id.width, id.height);
-        image.setData(id.data);
+        let image = new Bitmap(id.width, id.height, undefined, id.data);
         return image;
     }
 

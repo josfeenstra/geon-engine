@@ -180,6 +180,8 @@ export class Domain2 {
         );
     }
 
+    
+
     offset(xXyYoffset: number[]) {
         let off = xXyYoffset;
         if (off.length != 4) throw "need 4 values";

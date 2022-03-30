@@ -37,7 +37,7 @@ export class ShaderMesh {
 
     mesh: Mesh;
     ambi: Float32Array;
-    texture?: ImageData;
+    texture?: TexImageSource;
     _normKind: NormalKind = NormalKind.None;
 
     position: Matrix4;
@@ -52,7 +52,7 @@ export class ShaderMesh {
         normCount: number,
         uvCount: number,
         faceCount: number,
-        texture: ImageData | undefined = undefined,
+        texture: TexImageSource | undefined = undefined,
     ) {
         let perFaceCount = 3;
         this.mesh = Mesh.newEmpty(vertCount, faceCount, perFaceCount);
@@ -104,7 +104,7 @@ export class ShaderMesh {
         return rend;
     }
 
-    static fromRect(rect: Rectangle3, texture?: ImageData): ShaderMesh {
+    static fromRect(rect: Rectangle3): ShaderMesh {
         let verts = rect.getCorners();
         let faces: number[] = [];
         faces.push(...quadToTri([0, 1, 3, 2]));
@@ -116,7 +116,7 @@ export class ShaderMesh {
     }
 
     static fromImage(
-        image: Bitmap,
+        image: Bitmap | HTMLImageElement,
         plane: Plane,
         centered = true,
         scale = 1,
@@ -146,7 +146,7 @@ export class ShaderMesh {
         }
 
         // note: webgl can only work with 2^x images
-        if (fixWebglLimitation) {
+        if (fixWebglLimitation && image instanceof Bitmap) {
 
             let goodWidth = HelpGl.getNearestCorrectTextureSize(image.width);
             let goodHeight = HelpGl.getNearestCorrectTextureSize(image.height);
@@ -178,7 +178,7 @@ export class ShaderMesh {
                 }
             }
         }
-        mesh.setTexture(image.toImageData());
+        mesh.setTexture((image instanceof Bitmap) ? image.toImageData() : image);
         return mesh;
     }
 
@@ -252,7 +252,7 @@ export class ShaderMesh {
 
     // setters
 
-    setTexture(texture: ImageData) {
+    setTexture(texture: TexImageSource) {
         this.texture = texture;
         // recalculate things if needed
     }

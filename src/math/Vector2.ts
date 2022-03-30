@@ -14,7 +14,10 @@ import { Util } from "./Util";
 const trait = "vector-2";
 
 export class Vector2 {
-    trait = trait;
+    readonly trait = trait;
+
+    static dummy = Vector2.new();
+
     x: number;
     y: number;
 
@@ -28,9 +31,6 @@ export class Vector2 {
     }
 
     // --- factories & other statics
-
-    // use this to skip object creation
-    static dummy = Vector2.zero();
 
     static _zero: Vector2 = Vector2.zero();
 
